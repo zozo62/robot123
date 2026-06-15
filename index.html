@@ -1,27 +1,33 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html>
 <head>
     <meta charset="UTF-8">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background-color: #f0f0f0; }
+        model-viewer { width: 100vw; height: 100vh; display: block; }
+    </style>
 </head>
-<body style="margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: #f0f0f0;">
+<body>
 
-    <h1>Robot Showcase</h1>
+    <model-viewer id="viewer" src="https://zozo62.github.io/robot/models/robot_anim.glb" 
+                  shadow-intensity="1" camera-orbit="0deg 90deg auto"></model-viewer>
 
-    <h3>Full Robot</h3>
-    <model-viewer 
-        src="models/AI Robot car.glb" 
-        auto-rotate camera-controls 
-        style="width: 500px; height: 500px; background-color: #D3D3D3;">
-    </model-viewer>
-
-    <h3>Kicking Action</h3>
-    <model-viewer 
-        src="models/move.glb" 
-        auto-play loop animation-name="Action"
-        camera-controls 
-        style="width: 500px; height: 500px; background-color: #D3D3D3;">
-    </model-viewer>
-
+    <script>
+        const viewer = document.getElementById('viewer');
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // 如果網址含有 ?mode=anim，則執行動畫且關閉旋轉
+        if (urlParams.get('mode') === 'anim') {
+            viewer.setAttribute('autoplay', '');
+            viewer.setAttribute('animation-name', 'Action');
+            viewer.setAttribute('disable-pan', '');
+            viewer.setAttribute('disable-zoom', '');
+        } else {
+            // 否則，開啟旋轉功能
+            viewer.setAttribute('camera-controls', '');
+            viewer.setAttribute('auto-rotate', '');
+        }
+    </script>
 </body>
 </html>
