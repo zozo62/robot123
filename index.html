@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
     <style>
         body { margin: 0; padding: 0; background-color: #f0f0f0; }
@@ -10,21 +11,23 @@
 </head>
 <body>
 
-    <model-viewer id="viewer" src="https://zozo62.github.io/robot/models/robot_anim.glb" 
-                  shadow-intensity="1" camera-orbit="0deg 90deg auto"></model-viewer>
+    <model-viewer id="viewer" 
+                  src="https://zozo62.github.io/robot/models/robot_anim.glb" 
+                  shadow-intensity="1" 
+                  camera-orbit="180deg 90deg auto"></model-viewer>
 
     <script>
         const viewer = document.getElementById('viewer');
         const urlParams = new URLSearchParams(window.location.search);
         
-        // 如果網址含有 ?mode=anim，則執行動畫且關閉旋轉
         if (urlParams.get('mode') === 'anim') {
+            // 動畫模式：自動播放、關閉互動
             viewer.setAttribute('autoplay', '');
             viewer.setAttribute('animation-name', 'Action');
             viewer.setAttribute('disable-pan', '');
             viewer.setAttribute('disable-zoom', '');
         } else {
-            // 否則，開啟旋轉功能
+            // 互動模式：開啟手動旋轉 (360度)
             viewer.setAttribute('camera-controls', '');
             viewer.setAttribute('auto-rotate', '');
         }
