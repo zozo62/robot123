@@ -1,27 +1,38 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html>
 <head>
     <meta charset="UTF-8">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background-color: #f0f0f0; }
+        model-viewer { width: 100vw; height: 100vh; display: block; }
+    </style>
 </head>
-<body style="margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: #f0f0f0;">
+<body>
 
-    <h1>Robot Showcase</h1>
+    <model-viewer id="viewer" shadow-intensity="1" camera-orbit="0deg 90deg auto"></model-viewer>
 
-    <h3>Full Robot</h3>
-    <model-viewer 
-        src="models/AI Robot car.glb" 
-        auto-rotate camera-controls 
-        style="width: 500px; height: 500px; background-color: #D3D3D3;">
-    </model-viewer>
+    <script>
+        const viewer = document.getElementById('viewer');
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // 1. 設定要讀取的模型檔案
+        const modelName = urlParams.get('model') || 'AI_Robot_car.glb';
+        viewer.setAttribute('src', `https://zozo62.github.io/robot/models/${modelName}`);
 
-    <h3>Kicking Action</h3>
-    <model-viewer 
-        src="models/move.glb" 
-        auto-play loop animation-name="Action"
-        camera-controls 
-        style="width: 500px; height: 500px; background-color: #D3D3D3;">
-    </model-viewer>
-
+        // 2. 設定展示模式
+        if (urlParams.get('mode') === 'anim') {
+            // 動畫模式 (用於機械夾踢球展示)
+            viewer.setAttribute('autoplay', '');
+            viewer.setAttribute('animation-name', 'Action');
+            viewer.setAttribute('disable-pan', '');
+            viewer.setAttribute('disable-zoom', '');
+            viewer.setAttribute('loop', '');
+        } else {
+            // 互動模式 (用於 360 度觀看)
+            viewer.setAttribute('camera-controls', '');
+            viewer.setAttribute('auto-rotate', '');
+        }
+    </script>
 </body>
 </html>
