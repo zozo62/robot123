@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
     <style>
-        body { margin: 0; padding: 0; background-color: #f0f0f0; }
-        model-viewer { width: 100vw; height: 100vh; display: block; }
+        body { margin: 0; padding: 0; background-color: #f0f0f0; display: flex; flex-direction: column; align-items: center; }
+        
+        /* 調整模型與影片的顯示大小 */
+        model-viewer, video { width: 90vw; height: 60vh; display: block; border-radius: 20px; margin: 20px 0; background: #fff; }
     </style>
 </head>
 <body>
 
     <model-viewer id="viewer" shadow-intensity="1"></model-viewer>
+
+    <video id="video-player" autoplay loop muted playsinline>
+        <source src="https://zozo62.github.io/robot/0001-0160.mp4" type="video/mp4">
+        您的瀏覽器不支援影片播放。
+    </video>
 
     <script>
         const viewer = document.getElementById('viewer');
@@ -20,7 +27,7 @@
         const modelName = urlParams.get('model') || 'Arm.glb';
         viewer.setAttribute('src', `https://zozo62.github.io/robot/models/${modelName}`);
 
-        // 2. 設定視角 (如果網址沒設 orbit，預設為 0deg 90deg auto)
+        // 2. 設定視角
         const orbit = urlParams.get('orbit') || '0deg 90deg auto';
         viewer.setAttribute('camera-orbit', orbit);
 
@@ -37,5 +44,4 @@
         }
     </script>
 </body>
-</html>
 </html>
