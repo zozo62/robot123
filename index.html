@@ -1,37 +1,41 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>機械手臂展示</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        .video-container {
-            width: 90%;
-            max-width: 800px;
-        }
-        video {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
+        body { margin: 0; padding: 0; background-color: #f0f0f0; }
+        model-viewer { width: 100vw; height: 100vh; display: block; }
     </style>
 </head>
 <body>
 
-    <div class="video-container">
-        <video autoplay loop muted playsinline>
-            <source src="0001-0160.mp4" type="video/mp4">
-            您的瀏覽器不支援 HTML5 影片。
-        </video>
-    </div>
+    <model-viewer id="viewer" shadow-intensity="1"></model-viewer>
 
+    <script>
+        const viewer = document.getElementById('viewer');
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // 1. 設定模型檔案
+        const modelName = urlParams.get('model') || 'Arm.glb';
+        viewer.setAttribute('src', `https://zozo62.github.io/robot/models/${modelName}`);
+
+        // 2. 設定視角 (如果網址沒設 orbit，預設為 0deg 90deg auto)
+        const orbit = urlParams.get('orbit') || '0deg 90deg auto';
+        viewer.setAttribute('camera-orbit', orbit);
+
+        // 3. 設定展示模式
+        if (urlParams.get('mode') === 'anim') {
+            viewer.setAttribute('autoplay', '');
+            viewer.setAttribute('animation-name', 'Action');
+            viewer.setAttribute('disable-pan', '');
+            viewer.setAttribute('disable-zoom', '');
+            viewer.setAttribute('loop', '');
+        } else {
+            viewer.setAttribute('camera-controls', '');
+            viewer.setAttribute('auto-rotate', '');
+        }
+    </script>
 </body>
+</html>
 </html>
