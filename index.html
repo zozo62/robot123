@@ -4,48 +4,27 @@
     <meta charset="UTF-8">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
     <style>
-        /* 移除所有排版限制 */
-        body { margin: 20px; background-color: #f0f0f0; }
-        
-        .component-box { 
-            background: white; 
-            padding: 20px; 
-            border-radius: 20px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-            margin-bottom: 30px; /* 每個區塊之間的間距 */
-        }
-
-        model-viewer, video { 
-            width: 100%; 
-            max-width: 800px; 
-            height: 50vh; 
-            display: block; 
-            margin: 0 auto; /* 讓它們各自水平居中 */
-        }
+        body { margin: 0; padding: 0; background-color: #f0f0f0; }
+        model-viewer { width: 100vw; height: 100vh; display: block; }
     </style>
 </head>
 <body>
 
-    <div class="component-box">
-        <model-viewer id="viewer" shadow-intensity="1"></model-viewer>
-    </div>
-
-    <div class="component-box">
-        <video autoplay loop muted playsinline>
-            <source src="https://zozo62.github.io/robot/Arm_anim.mp4" type="video/mp4">
-        </video>
-    </div>
+    <model-viewer id="viewer" shadow-intensity="1"></model-viewer>
 
     <script>
         const viewer = document.getElementById('viewer');
         const urlParams = new URLSearchParams(window.location.search);
         
+        // 1. 設定模型檔案
         const modelName = urlParams.get('model') || 'Arm.glb';
         viewer.setAttribute('src', `https://zozo62.github.io/robot/models/${modelName}`);
-        
+
+        // 2. 設定視角 (如果網址沒設 orbit，預設為 0deg 90deg auto)
         const orbit = urlParams.get('orbit') || '0deg 90deg auto';
         viewer.setAttribute('camera-orbit', orbit);
 
+        // 3. 設定展示模式
         if (urlParams.get('mode') === 'anim') {
             viewer.setAttribute('autoplay', '');
             viewer.setAttribute('animation-name', 'Action');
