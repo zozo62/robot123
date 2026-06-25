@@ -2,37 +2,39 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
     <style>
-    body { margin: 0; padding: 0; background-color: #f0f0f0; }
-    
-    /* 這裡加入 !important 來強制覆蓋預設的 300x150 限制 */
-    model-viewer { 
-        width: 100vw !important; 
-        height: 100vh !important; 
-        display: block; 
-    }
+        body { margin: 0; padding: 0; background-color: #f0f0f0; }
+        model-viewer { width: 100vw; height: 100vh; display: block; }
     </style>
 </head>
 <body>
 
-    <model-viewer id="viewer" 
-                  shadow-intensity="1" 
-                  camera-controls 
-                  auto-rotate 
-                  camera-target="auto auto auto">
-    </model-viewer>
+    <model-viewer id="viewer" shadow-intensity="1"></model-viewer>
 
     <script>
         const viewer = document.getElementById('viewer');
         const urlParams = new URLSearchParams(window.location.search);
         
-        // 確保強制指向 models/ 資料夾
+        // 1. 設定模型檔案
         const modelName = urlParams.get('model') || 'Arm.glb';
-        const modelUrl = `https://zozo62.github.io/robot123/models/${modelName}`;
-        
-        console.log("現在載入的檔案路徑:", modelUrl);
-        viewer.setAttribute('src', modelUrl);
+        viewer.setAttribute('src', `https://zozo62.github.io/robot123/models/${modelName}`);
+
+        // 2. 設定視角 (如果網址沒設 orbit，預設為 0deg 90deg auto)
+        const orbit = urlParams.get('orbit') || '0deg 90deg auto';
+        viewer.setAttribute('camera-orbit', orbit);
+
+        // 3. 設定展示模式
+        if (urlParams.get('mode') === 'anim') {
+            viewer.setAttribute('autoplay', '');
+            viewer.setAttribute('animation-name', 'Action');
+            viewer.setAttribute('disable-pan', '');
+            viewer.setAttribute('disable-zoom', '');
+            viewer.setAttribute('loop', '');
+        } else {
+            viewer.setAttribute('camera-controls', '');
+            viewer.setAttribute('auto-rotate', '');
+        }
     </script>
 </body>
 </html>
