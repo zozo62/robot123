@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
     <style>
-        body { margin: 0; padding: 0; background-color: #f0f0f0; }
-        model-viewer { width: 100vw; height: 100vh; display: block; }
+    body { margin: 0; padding: 0; background-color: #f0f0f0; }
+    
+    /* 這裡加入 !important 來強制覆蓋預設的 300x150 限制 */
+    model-viewer { 
+        width: 100vw !important; 
+        height: 100vh !important; 
+        display: block; 
+    }
     </style>
 </head>
 <body>
